@@ -22,7 +22,7 @@ const sleep = (time) => {
         setTimeout(resolve, time);
     });
 };
-class NotificationService {
+class Messaging {
     constructor(configuration) {
         this.region = configuration.region;
         this.topicArn = configuration.topicArn;
@@ -40,6 +40,12 @@ class NotificationService {
                 endpoint: this.endpoint,
             });
         }
+    }
+    static getInstance(configuration) {
+        if (!Messaging.instance && configuration) {
+            Messaging.instance = new Messaging(configuration);
+        }
+        return Messaging.instance;
     }
     buildEvent(payload) {
         return {
@@ -84,7 +90,7 @@ class NotificationService {
         });
     }
 }
-exports.NotificationService = NotificationService;
+exports.Messaging = Messaging;
 function setAWSCredentials() {
     // This is used in local dev only, as both in prod and uat the credentials are from the task definition
     aws_sdk_1.default.config.update({

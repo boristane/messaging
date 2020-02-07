@@ -6,15 +6,15 @@ const sleep = (time: number) => {
   });
 }
 
-export class NotificationService {
+export class Messaging {
   private region: string;
   private topicArn: string;
   private endpoint: string;
   private producer: SNS;
   private source: string;
-  private static instance: NotificationService;
+  private static instance: Messaging;
 
-  private constructor(configuration: NotificationServiceConfiguration) {
+  private constructor(configuration: MessagingConfiguration) {
     this.region = configuration.region;
     this.topicArn = configuration.topicArn;
     this.endpoint = configuration.endpoint || "";
@@ -33,11 +33,11 @@ export class NotificationService {
     }
   }
 
-  public static getInstance(configuration?: NotificationServiceConfiguration): NotificationService {
-    if (!NotificationService.instance && configuration) {
-      NotificationService.instance = new NotificationService(configuration);
+  public static getInstance(configuration?: MessagingConfiguration): Messaging {
+    if (!Messaging.instance && configuration) {
+      Messaging.instance = new Messaging(configuration);
     }
-    return NotificationService.instance;
+    return Messaging.instance;
 }
 
   private buildEvent(payload: INotificationPayload): INotificationEvent {
@@ -106,7 +106,7 @@ export interface INotificationEvent {
   correlationId: string,
 }
 
-export interface NotificationServiceConfiguration {
+export interface MessagingConfiguration {
   region: string,
   topicArn: string,
   source: string,
