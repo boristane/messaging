@@ -12,8 +12,9 @@ export class NotificationService {
   private endpoint: string;
   private producer: SNS;
   private source: string;
+  private static instance: NotificationService;
 
-  constructor(configuration: NotificationServiceConfiguration) {
+  private constructor(configuration: NotificationServiceConfiguration) {
     this.region = configuration.region;
     this.topicArn = configuration.topicArn;
     this.endpoint = configuration.endpoint || "";
@@ -31,6 +32,13 @@ export class NotificationService {
       });
     }
   }
+
+  public static getInstance(configuration?: NotificationServiceConfiguration): NotificationService {
+    if (!NotificationService.instance && configuration) {
+      NotificationService.instance = new NotificationService(configuration);
+    }
+    return NotificationService.instance;
+}
 
   private buildEvent(payload: INotificationPayload): INotificationEvent {
     return {
