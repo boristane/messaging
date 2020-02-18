@@ -62,6 +62,7 @@ class Messaging {
             let isSent = false;
             const maxTries = 4;
             let tryCount = 0;
+            let error;
             while (!isSent && tryCount < maxTries) {
                 try {
                     const messageId = yield this.producer.publish({
@@ -81,12 +82,20 @@ class Messaging {
                     isSent = true;
                 }
                 catch (err) {
+                    error = err;
                     tryCount += 1;
                     yield sleep(2000);
                     continue;
                 }
             }
-            throw new Error("Failed sending notification to messaging system.");
+            const data = {
+                region: this.region,
+                topicArn: this.topicArn,
+                endpoint: this.endpoint,
+                source: this.source,
+                payload,
+            };
+            throw new Error(`Failed sending notification to messaging system. data: ${data}; error: ${error}`);
         });
     }
 }

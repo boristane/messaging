@@ -55,6 +55,7 @@ export class Messaging {
     let isSent = false;
     const maxTries = 4;
     let tryCount = 0;
+    let error;
     while(!isSent && tryCount < maxTries) {
       try {
         const messageId = await this.producer.publish({
@@ -73,12 +74,20 @@ export class Messaging {
         }).promise();
         isSent = true;
       } catch (err) {
+        error = err;
         tryCount += 1;
         await sleep(2000);
         continue;
       }
     }
-    throw new Error("Failed sending notification to messaging system.");
+    const data = {
+      region: this.region,
+      topicArn: this.topicArn,
+      endpoint: this.endpoint,
+      source: this.source,
+      payload,
+    }
+    throw new Error(`Failed sending notification to messaging system. data: ${JSON.stringify(data)}; error: ${error}`);
   }
 }
 
