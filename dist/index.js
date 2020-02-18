@@ -70,16 +70,18 @@ class Messaging {
                         TopicArn: this.topicArn,
                         MessageAttributes: {
                             eventSource: {
-                                DataType: "string",
+                                DataType: "String",
                                 StringValue: this.source,
                             },
                             eventType: {
-                                DataType: "string",
+                                DataType: "String",
                                 StringValue: payload.type
                             }
                         }
                     }).promise();
                     isSent = true;
+                    if (isSent)
+                        return;
                 }
                 catch (err) {
                     error = err;
@@ -95,7 +97,7 @@ class Messaging {
                 source: this.source,
                 payload,
             };
-            throw new Error(`Failed sending notification to messaging system. data: ${data}; error: ${error}`);
+            throw new Error(`Failed sending notification to messaging system. data: ${JSON.stringify(data)}; error: ${error}`);
         });
     }
 }

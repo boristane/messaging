@@ -63,16 +63,17 @@ export class Messaging {
           TopicArn: this.topicArn,
           MessageAttributes: {
             eventSource: {
-              DataType: "string",
+              DataType: "String",
               StringValue: this.source,
             },
             eventType: {
-              DataType: "string",
+              DataType: "String",
               StringValue: payload.type
             }
           }
         }).promise();
         isSent = true;
+        if (isSent) return;
       } catch (err) {
         error = err;
         tryCount += 1;
