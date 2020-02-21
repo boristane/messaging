@@ -6,7 +6,7 @@ export class Messaging {
 
 export interface INotificationPayload {
   type: string;
-  data: object;
+  data: Record<string, any>;
   correlationId: string;
 }
 

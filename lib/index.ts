@@ -27,7 +27,7 @@ export class Messaging {
     } else {
       setAWSCredentials();
       this.producer = new SNS({
-       region: this.region,
+        region: this.region,
         endpoint: this.endpoint,
       });
     }
@@ -38,7 +38,7 @@ export class Messaging {
       Messaging.instance = new Messaging(configuration);
     }
     return Messaging.instance;
-}
+  }
 
   private buildEvent(payload: INotificationPayload): INotificationEvent {
     return {
@@ -56,7 +56,7 @@ export class Messaging {
     const maxTries = 4;
     let tryCount = 0;
     let error;
-    while(!isSent && tryCount < maxTries) {
+    while (!isSent && tryCount < maxTries) {
       try {
         const messageId = await this.producer.publish({
           Message: JSON.stringify(this.buildEvent(payload)),
@@ -103,7 +103,7 @@ function setAWSCredentials() {
 
 export interface INotificationPayload {
   type: string;
-  data: object;
+  data: Record<string, any>;
   correlationId: string;
 }
 
@@ -112,7 +112,7 @@ export interface INotificationEvent {
   created: string,
   source: string,
   version: number,
-  payload: object,
+  payload: Record<string, any>,
   correlationId: string,
 }
 
