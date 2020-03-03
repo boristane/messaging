@@ -52,7 +52,7 @@ class Messaging {
             type: payload.type,
             created: (new Date()).toISOString(),
             source: this.source,
-            payload,
+            payload: payload.data,
             correlationId: payload.correlationId,
             version: 1
         };
