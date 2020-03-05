@@ -20,13 +20,11 @@
   },
   "homepage": "https://github.com/boristane/messaging#readme",
   "devDependencies": {
-    "@types/aws-sdk": "^2.7.0",
     "@types/node": "^13.7.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "aws-sdk": "^2.613.0",
-    "logger": "git+https://0b229f9c72ff31d5eb845ee2d111fd4d51a06f00:x-oauth-basic@github.com/boristane/logger.git"
+    "aws-sdk": "^2.613.0"
   }
 }
