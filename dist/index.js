@@ -54,7 +54,7 @@ class Messaging {
             source: this.source,
             payload: payload.data,
             correlationId: payload.correlationId,
-            version: 1
+            version: payload.version || 1
         };
     }
     publish(payload) {

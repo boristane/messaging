@@ -8,6 +8,7 @@ export interface INotificationPayload {
   type: string;
   data: Record<string, any>;
   correlationId: string;
+  version?: number;
 }
 
 export interface MessagingConfiguration {

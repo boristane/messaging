@@ -47,7 +47,7 @@ export class Messaging {
       source: this.source,
       payload: payload.data,
       correlationId: payload.correlationId,
-      version: 1
+      version: payload.version || 1
     }
   }
 
@@ -105,6 +105,7 @@ export interface INotificationPayload {
   type: string;
   data: Record<string, any>;
   correlationId: string;
+  version?: number;
 }
 
 export interface INotificationEvent {
